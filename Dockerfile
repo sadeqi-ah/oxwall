@@ -1,11 +1,13 @@
-FROM webdevops/php-apache-dev:5.6
+FROM php:5.6.40-apache-stretch
+
+RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y libpng-dev
 RUN apt-get install -y libonig-dev
 RUN apt-get install -y libjpeg-dev
 RUN apt-get install -y default-libmysqlclient-dev
 RUN apt-get install -y libssl-dev
-RUN apt-get install -y libfreetype6-dev 
+RUN apt-get install -y libfreetype6-dev
 RUN apt-get install -y libzip-dev
 RUN apt-get install -y cron
 RUN apt-get install -y ssmtp
