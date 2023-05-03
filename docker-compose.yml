@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  web:
+    image: oxwall:latest
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    volumes:
+      - ./ow_userfiles:/var/www/html/ow_userfiles
+      - ./ow_plugins:/var/www/html/ow_plugins
+      - ./ow_themes:/var/www/html/ow_themes
+      - ./ow_system_plugins:/var/www/html/ow_system_plugins
+  db:
+    image: arm64v8/mysql
+    environment:
+      MYSQL_DATABASE: oxwall
+      MYSQL_USER: oxwall
+      MYSQL_PASSWORD: oxwallpass
+      MYSQL_ROOT_PASSWORD: rootpass
+    volumes:
+      - oxwall-db-data:/var/lib/mysql
+volumes:
+  oxwall-db-data:
