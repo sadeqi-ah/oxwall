@@ -1,7 +1,10 @@
 version: "3.8"
 services:
   web:
-    image: oxwall:latest
+    # build from Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8081:80"
     depends_on:
@@ -12,7 +15,7 @@ services:
       - ./ow_themes:/var/www/html/ow_themes
       - ./ow_system_plugins:/var/www/html/ow_system_plugins
   db:
-    image: arm64v8/mysql
+    image: mysql
     environment:
       MYSQL_DATABASE: oxwall
       MYSQL_USER: oxwall
