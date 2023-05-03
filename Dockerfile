@@ -12,16 +12,18 @@ RUN apt-get install -y libzip-dev
 RUN apt-get install -y cron
 RUN apt-get install -y ssmtp
 RUN apt-get install -y unzip
+RUN apt-get install -y freetype*
 
 RUN curl -fsSL -o oxwall.zip \
       "http://ow.download.s3.amazonaws.com/oxwall-1.8.4.1.zip"
 RUN unzip oxwall.zip \
  && rm oxwall.zip
 
-
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd mbstring mysql pdo pdo_mysql zip ftp \
+RUN docker-php-ext-install mbstring mysql pdo pdo_mysql zip ftp \
     && a2enmod rewrite
+
+RUN docker-php-ext-configure gd --with-freetype_dir=/usr/include/ --with-jpeg=/usr/include/ \
+        && docker-php-ext-install -j$(nproc) gd
 
 COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html/
